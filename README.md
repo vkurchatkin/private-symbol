@@ -21,9 +21,9 @@ myObj[symbol] = 123;
 console.log(Object.getOwnPropertySymbols(myObj)); // nothing
 
 ```
-
-`PrivateSymbol.for()` works the same way as `Symbol.for()`.
-`PrivateSymbol.keyFor()` is NOT implemented.
+ - `PrivateSymbol([description])` — create symbol with `description`;
+ - `PrivateSymbol.for()` works the same way as `Symbol.for()`;
+ - `PrivateSymbol.keyFor()` is NOT implemented.
 
 Private symbols can be used for truly private properties:
 
