@@ -1,34 +1,32 @@
 var PrivateSymbol = require('./index.js');
 var assert = require('assert');
 
-var s = Date.now();
+function measure (type, N, key) {
 
-var obj = {};
-var key = 'prop';
+  var objects = Array(N);
 
-for (var i = 0; i < 1000000; i++) {
-  obj[key] = i;
+  for (var i = 0; i < N; i++)
+    objects[i] = {};
+
+  var s = Date.now();
+
+
+  for (var i = 0; i < N; i++) {
+    objects[i][key] = i;
+  }
+
+  console.log(type + ' property set', Date.now() - s);
+
+  s = Date.now();
+
+  for (var i = 0; i < N; i++) {
+    assert(objects[i][key] === i);
+  }
+
+  console.log(type + ' property get', Date.now() - s);
+
 }
 
-console.log('String property', Date.now() - s);
-
-var s = Date.now();
-var obj = {};
-var key = Symbol('prop');
-
-for (var i = 0; i < 1000000; i++) {
-  obj[key] = i;
-}
-
-console.log('Symbol', Date.now() - s);
-
-
-var s = Date.now();
-var obj = {};
-var key = PrivateSymbol('prop');
-
-for (var i = 0; i < 1000000; i++) {
-  obj[key] = i;
-}
-
-console.log('PrivateSymbol', Date.now() - s);
+measure('String', 1000000, 'prop');
+measure('Symbol', 1000000, Symbol('prop'));
+measure('PrivateSymbol', 1000000, PrivateSymbol('prop'));
